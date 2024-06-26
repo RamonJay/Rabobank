@@ -1,0 +1,22 @@
+.container {
+  margin: auto;
+  text-align: center;
+  padding: 5%;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

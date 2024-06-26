@@ -1,0 +1,48 @@
+<div class="container">
+  <h1>Meetings</h1>
+  <div class="card">
+    <table class="table table-striped" *ngIf="meetings">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Meeting Time</th>
+          <th>Meeting Link</th>
+          <th>Meeting Password</th>
+          <th>Meeting Date</th>
+          <th>Meeting Platform Id</th>
+          <th>Sprint Id</th>
+          <th>Meeting Type</th>
+          <th>Created On</th>
+          <th>Updated On</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let meeting of meetings">
+          <td>{{ meeting.id }}</td>
+          <td>{{ meeting.meetingTime }}</td>
+          <td>{{ meeting.meetingLink }}</td>
+          <td>{{ meeting.meetingPassword }}</td>
+          <td>{{ meeting.meetingDate }}</td>
+          <td>{{ meeting.meetingPlatform.id }}</td>
+          <td>{{ meeting.sprint.sprintId }}</td>
+          <td>{{ meeting.meetingType }}</td>
+          <td>{{ meeting.createdOn }}</td>
+          <td>{{ meeting.updatedOn }}</td>
+          <td>{{ meeting.status }}</td>
+          <td>
+            <button
+              color="primary"
+              mat-flat-button
+              color="primary"
+              [disabled]="meeting.status == 'completed'"
+              (click)="rescheduleClick(meeting.id)"
+            >
+              Reschedule
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

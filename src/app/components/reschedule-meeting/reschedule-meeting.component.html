@@ -1,0 +1,134 @@
+<div class="container">
+  <h1>Reschedule Meeting</h1>
+  <div class="card">
+    <form [formGroup]="SearchForm" (ngSubmit)="findMeeting(SearchForm.value)">
+      <mat-form-field class="field">
+        <input
+          type="number"
+          matInput
+          placeholder="Search Meeting Id"
+          formControlName="id"
+          min="7000"
+          required
+        />
+        <mat-error *ngIf="SearchForm.get('id')?.invalid">
+          Meeting ID is required.
+        </mat-error>
+        <button matSuffix mat-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <p *ngIf="warn">
+        <ngb-alert [dismissible]="false">
+          {{ message }}
+        </ngb-alert>
+      </p>
+    </form>
+    <div *ngIf="flag">
+      <form
+        [formGroup]="MeetingForm"
+        (ngSubmit)="rescheduleMeeting(MeetingForm.value)"
+      >
+        <table class="table table-striped" *ngIf="meeting">
+          <tbody>
+            <tr>
+              <td>Meeting Id:</td>
+              <td>
+                <input matInput readonly formControlName="id" />
+              </td>
+            </tr>
+            <tr>
+              <td>Meeting platform Id:</td>
+              <div formGroupName="meetingPlatform" width="100%">
+                <td>
+                  <input matInput readonly formControlName="id" />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td>Sprint Id:</td>
+              <div formGroupName="sprint">
+                <td>
+                  <input matInput readonly formControlName="sprintId" />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td>Meeting Type:</td>
+              <td>
+                <input matInput readonly formControlName="meetingType" />
+              </td>
+            </tr>
+            <tr>
+              <td>Meeting Link:</td>
+              <td>
+                <input
+                  type="url"
+                  matInput
+                  formControlName="meetingLink"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Meeting password:</td>
+              <td>
+                <input matInput readonly formControlName="meetingPassword" />
+              </td>
+            </tr>
+            <tr>
+              <td>Meeting Date:</td>
+              <td>
+                <input matInput formControlName="meetingDate" />
+              </td>
+            </tr>
+            <tr>
+              <td>Meeting Time:</td>
+              <td>
+                <input matInput formControlName="meetingTime" />
+              </td>
+            </tr>
+
+            <tr>
+              <td>Current Status:</td>
+              <td>
+                <input matInput readonly [value]="meeting.status" />
+              </td>
+            </tr>
+            <!-- <tr>
+              <td>New Status</td>
+              <td>
+                <select matInput formControlName="status">
+                  <option value="reschedule">Reschedule</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </td>
+            </tr> -->
+
+            <br />
+          </tbody>
+        </table>
+        <div class="text-center">
+          <mat-spinner class="progress" *ngIf="progressFlag"></mat-spinner>
+          <button
+            type="submit"
+            color="primary"
+            mat-raised-button
+            [disabled]="!MeetingForm.touched"
+          >
+            Reschedule
+          </button>
+          <button
+            type="reset"
+            (click)="cancel()"
+            color="accent"
+            mat-raised-button
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

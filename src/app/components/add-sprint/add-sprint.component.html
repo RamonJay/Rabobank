@@ -1,0 +1,71 @@
+<div class="container">
+  <h1>ADD SPRINT</h1>
+  <div class="card">
+    <form [formGroup]="SprintForm" (ngSubmit)="submitted(SprintForm.value)">
+      <div class="form-container">
+        <mat-form-field class="field">
+          <mat-label>Project Code</mat-label>
+          <input
+            type="number"
+            matInput
+            name="projectCode"
+            formControlName="projectCode"
+            min="101"
+          />
+          <mat-error *ngIf="SprintForm.get('projectCode')?.invalid">
+            Project code shold be more than 100
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="field">
+          <mat-label>Start Date</mat-label>
+          <input
+            matInput
+            type="date"
+            name="startDate"
+            formControlName="startDate"
+          />
+          <mat-error *ngIf="SprintForm.get('startDate')?.invalid">
+            Date should be after today
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field">
+          <mat-label>End Date</mat-label>
+          <input
+            type="date"
+            matInput
+            name="endDate"
+            formControlName="endDate"
+          />
+          <mat-error *ngIf="SprintForm.get('endDate')?.invalid">
+            Date should be after today
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="text-center">
+        <mat-spinner class="progress" *ngIf="progressFlag"></mat-spinner>
+        <button
+          type="submit"
+          color="primary"
+          mat-raised-button
+          [disabled]="!SprintForm.valid"
+        >
+          Submit
+        </button>
+        <button
+          type="reset"
+          color="accent"
+          mat-raised-button
+          (click)="resetSnackVar()"
+        >
+          Reset
+        </button>
+      </div>
+      <p *ngIf="flag" class="message">
+        {{ message }}
+      </p>
+    </form>
+  </div>
+  <br />
+</div>

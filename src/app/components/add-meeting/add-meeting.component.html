@@ -1,0 +1,110 @@
+<div class="container">
+  <h1>Add Meeting</h1>
+  <div class="card">
+    <form
+      [formGroup]="MeetingForm"
+      (ngSubmit)="meetingSubmit(MeetingForm.value)"
+    >
+      <div class="form-container">
+        <div formGroupName="sprint">
+          <mat-form-field class="field">
+            <mat-label>Select Sprint</mat-label>
+            <mat-select formControlName="sprintId">
+              <mat-option
+                *ngFor="let sprin of sprints"
+                [value]="sprin.sprintId"
+              >
+                {{ sprin.sprintName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-form-field class="field">
+          <mat-label>Meeting Start Time</mat-label>
+          <input type="time" matInput formControlName="meetingTime" />
+          <mat-hint>24Hour format</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="field">
+          <mat-label>Meeting Password</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="meetingPassword"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          />
+          <mat-error *ngIf="MeetingForm.get('meetingPassword')?.invalid">
+            Password should contain at least a lowercase and capital letter and
+            a digit and min length should be 8 characters
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-container">
+        <mat-form-field class="field">
+          <mat-label>Meeting Link</mat-label>
+          <input
+            type="url"
+            matInput
+            formControlName="meetingLink"
+            pattern="https?://.+"
+          />
+          <mat-error *ngIf="MeetingForm.get('meetingLink')?.invalid">
+            Please enter a valid URL.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-radio-group formControlName="meetingType">
+          <mat-label><b>Select Meeting Type :</b></mat-label>
+          <mat-radio-button value="DailyScrum">DailyScrum</mat-radio-button>
+          <mat-radio-button value="SprintPlanning"
+            >SprintPlanning</mat-radio-button
+          >
+          <mat-radio-button value="SprintRetrospective"
+            >SprintRetrospective</mat-radio-button
+          >
+          <mat-radio-button value="SprintReview">SprintReview</mat-radio-button>
+          <br />
+          <mat-hint
+            >Durations: DailyScrum-15minutes; SprintPlanning,
+            SprintRetrospective and SprintReview-1Hour</mat-hint
+          >
+        </mat-radio-group>
+        <div formGroupName="meetingPlatform">
+          <mat-form-field class="field">
+            <mat-label>Meeting Platform</mat-label>
+            <mat-select formControlName="id">
+              <mat-option
+                *ngFor="let meetingPlatform of MeetingPlatforms"
+                [value]="meetingPlatform.id"
+              >
+                {{ meetingPlatform.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <mat-spinner class="progress" *ngIf="progressFlag"></mat-spinner>
+        <button
+          type="submit"
+          color="primary"
+          mat-raised-button
+          [disabled]="!MeetingForm.valid"
+        >
+          Submit
+        </button>
+        <button
+          type="reset"
+          color="accent"
+          mat-raised-button
+          (click)="resetSnackVar()"
+        >
+          Reset
+        </button>
+      </div>
+      <p *ngIf="flag" class="message">
+        {{ message }}
+      </p>
+    </form>
+  </div>
+</div>
